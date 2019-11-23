@@ -5,6 +5,8 @@
     overflow: hidden;
     background-color: #333333;
     height: 50px;
+    display: flex;
+    justify-content: center;
 }
 
 .liref li {

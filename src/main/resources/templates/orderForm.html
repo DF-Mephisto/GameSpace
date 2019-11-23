@@ -2,72 +2,99 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Game Space</title>
     <link rel="stylesheet" th:href="@{/styles/header.css}">
     <link rel="stylesheet" th:href="@{/styles/orderForm.css}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
-<body>
+<body th:style="${'background-image:url(' + '/images/pageBack.png' + '); background-attachment: fixed;'}">
 <ul class="liref">
     <li><a href="/">HOME</a></li>
     <li><a href="/games">GAMES</a></li>
     <li><a href="/add">ADD GAME</a></li>
 </ul>
 
-<form method="post" th:action="@{/orders}" th:object="${order}">
-    <h1>Order your game!</h1>
+<div class="cont-center">
+    <div class="w3-card-4" style="width:80%; background-color: rgba(100, 100, 100, 0.3);">
 
-    <div th:if="${#fields.hasErrors()}">
-        <span class="error">Please correct the problems below and resubmit.</span>
+        <div class="w3-container w3-black w3-opacity w3-text-white">
+            <h2><b>Order your game:</b></h2>
+        </div>
+
+        <form method="post" th:action="@{/orders}" th:object="${order}">
+
+            <div class="w3-container w3-opacity w3-text-white" style="background-color: rgba(50, 50, 50, 0.7)">
+                <h3><b>Deliver an order to:</b></h3>
+            </div>
+
+            <div class="w3-container">
+                <label>
+                    <h3>Name:</h3>
+                    <input class="w3-input w3-border" type="text" th:field="*{name}">
+                </label>
+                <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                <br>
+
+                <label>
+                    <h3>City:</h3>
+                    <input class="w3-input w3-border" type="text" th:field="*{city}">
+                </label>
+                <span class="error" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
+                <br>
+
+                <label>
+                    <h3>Street:</h3>
+                    <input class="w3-input w3-border" type="text" th:field="*{street}">
+                </label>
+                <span class="error" th:if="${#fields.hasErrors('street')}" th:errors="*{street}"></span>
+                <br>
+
+                <label>
+                    <h3>House:</h3>
+                    <input class="w3-input w3-border" type="text" th:field="*{house}">
+                </label>
+                <span class="error" th:if="${#fields.hasErrors('house')}" th:errors="*{house}"></span>
+                <br>
+                <hr>
+            </div>
+
+            <div class="w3-container w3-opacity w3-text-white" style="background-color: rgba(50, 50, 50, 0.7)">
+                <h3><b>Credit card details:</b></h3>
+            </div>
+
+            <div class="w3-container">
+                <label>
+                    <h3>ccNumber:</h3>
+                    <input class="w3-input w3-border" type="text" th:field="*{ccNumber}">
+                </label>
+                <span class="error" th:if="${#fields.hasErrors('ccNumber')}" th:errors="*{ccNumber}"></span>
+                <br>
+
+                <label>
+                    <h3>ccExpiration:</h3>
+                    <input class="w3-input w3-border" type="text" th:field="*{ccExpiration}">
+                </label>
+                <span class="error" th:if="${#fields.hasErrors('ccExpiration')}" th:errors="*{ccExpiration}"></span>
+                <br>
+
+                <label>
+                    <h3>ccCVV:</h3>
+                    <input class="w3-input w3-border" type="text" th:field="*{ccCVV}">
+                </label>
+                <span class="error" th:if="${#fields.hasErrors('ccCVV')}" th:errors="*{ccCVV}"></span>
+                <br>
+                <hr>
+            </div>
+
+            <div class="w3-container w3-center" style="margin-bottom: 16px;">
+                <input class="w3-btn w3-blue-grey" type="submit" value="Submit Order">
+            </div>
+
+        </form>
+
     </div>
-
-    <h3>Deliver a game to: </h3>
-    <label> Name:
-        <input type="text" th:field="*{name}">
-    </label>
-    <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-    <br>
-
-    <label> City:
-        <input type="text" th:field="*{city}">
-    </label>
-    <span class="error" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
-    <br>
-
-    <label> Street:
-        <input type="text" th:field="*{street}">
-    </label>
-    <span class="error" th:if="${#fields.hasErrors('street')}" th:errors="*{street}"></span>
-    <br>
-
-    <label> House:
-        <input type="text" th:field="*{house}">
-    </label>
-    <span class="error" th:if="${#fields.hasErrors('house')}" th:errors="*{house}"></span>
-    <br>
-
-    <h3>Here is how you will pay: </h3>
-    <label> ccNumber:
-        <input type="text" th:field="*{ccNumber}">
-    </label>
-    <span class="error" th:if="${#fields.hasErrors('ccNumber')}" th:errors="*{ccNumber}"></span>
-    <br>
-
-    <label> ccExpiration:
-        <input type="text" th:field="*{ccExpiration}">
-    </label>
-    <span class="error" th:if="${#fields.hasErrors('ccExpiration')}" th:errors="*{ccExpiration}"></span>
-    <br>
-
-    <label> ccCVV:
-        <input type="text" th:field="*{ccCVV}">
-    </label>
-    <span class="error" th:if="${#fields.hasErrors('ccCVV')}" th:errors="*{ccCVV}"></span>
-    <br>
-
-    <br><br><hr>
-    <input type="submit" value="Submit Order">
-
-</form>
+</div>
 
 
 </body>

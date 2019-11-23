@@ -1,0 +1,16 @@
+.cont-center {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.neo-container {
+    box-shadow: 1px 2px 3px;
+    color: #a00;
+}
+
+.neo-text {
+    text-shadow: 0px 0px 4px deepskyblue;
+}

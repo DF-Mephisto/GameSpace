@@ -35,6 +35,8 @@ public class AddGameController {
     public String processNewGame(@Valid Game game, BindingResult errors, @RequestParam("file") MultipartFile file)
     {
         try {
+            if (file.isEmpty()) throw new NullPointerException("No image");
+
             game.setImage(Base64.getEncoder().encode(file.getBytes()));
             game.setExt(Optional.ofNullable(file.getOriginalFilename())
                     .filter(f -> f.contains("."))
@@ -44,7 +46,11 @@ public class AddGameController {
 
         } catch (IOException e) {
             errors.rejectValue("image", "error.game", "File uploading error");
+        } catch (NullPointerException e)
+        {
+            errors.rejectValue("image", "error.game", "You must choose an image");
         }
+
 
         if (errors.hasErrors())
         {
