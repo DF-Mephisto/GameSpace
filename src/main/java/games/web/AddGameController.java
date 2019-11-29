@@ -1,16 +1,15 @@
 package games.web;
 
 import games.Game;
+import games.data.GameRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -23,11 +22,23 @@ import java.util.Optional;
 @RequestMapping("/add")
 public class AddGameController {
 
-    @GetMapping
-    public String addGame(Model model)
-    {
+    private GameRepository GameRepo;
 
-        model.addAttribute("game", new Game());
+    @Autowired
+    public AddGameController(GameRepository GameRepo)
+    {
+        this.GameRepo = GameRepo;
+    }
+
+    @ModelAttribute(name = "game")
+    public Game game()
+    {
+        return new Game();
+    }
+
+    @GetMapping
+    public String addGame()
+    {
         return "add";
     }
 
@@ -42,8 +53,6 @@ public class AddGameController {
                     .filter(f -> f.contains("."))
                     .map(f -> f.substring(file.getOriginalFilename().lastIndexOf(".") + 1)).toString());
 
-            //model.addAttribute("img", "data:image/" + game.getExt() + ";base64," + new String(game.getImage()));
-
         } catch (IOException e) {
             errors.rejectValue("image", "error.game", "File uploading error");
         } catch (NullPointerException e)
@@ -57,6 +66,7 @@ public class AddGameController {
             return "add";
         }
 
+        GameRepo.save(game);
         log.info("Processing new game: " + game);
 
         return "redirect:/orders/current";

@@ -16,9 +16,16 @@
 </ul>
 
 <h1>List of Available Games:</h1>
+<div th:each="game: ${gameslist}">
+    <div th:text="${game.name}"></div>
+    <div th:text="${game.genre}"></div>
+    <div th:text="${game.date}"></div>
+    <div th:text="${game.dev}"></div>
+    <div th:text="${game.desc}"></div>
+    <div th:text="${game.price}"></div>
+    <img th:src="${game.getImageStr()}" />
 
-
-
+</div>
 
 </body>
 </html>

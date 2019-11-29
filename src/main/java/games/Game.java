@@ -1,21 +1,23 @@
 package games;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Entity
+@Table(name="game")
 public class Game {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    Long id;
+
     @NotBlank
     @Size(min=1, max=50, message = "Name must be between 1 and 50 length long")
     String name;
@@ -24,7 +26,7 @@ public class Game {
     @Size(min=1, max=50, message = "Genre must be between 1 and 50 length long")
     String genre;
 
-    @Pattern(regexp = "([0-9]{4}-(0[1-9]|1[0-2])-[0-2][0-9]|3[0-1])", message="Incorrect date")
+    @Pattern(regexp = "([0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[0-1]))", message="Incorrect date")
     String date;
 
     @NotBlank
@@ -34,10 +36,15 @@ public class Game {
     @Pattern(regexp = "([0-9]+)", message = "Price must be integer value")
     String price;
 
+    @Column(name="description")
     @NotBlank
     @Size(min=1, max=1000, message = "Description must be between 1 and 1000 length long")
     String desc;
 
     byte[] image;
     String ext;
+    public String getImageStr()
+    {
+        return "data:image/" + getExt() + ";base64," + new String(getImage());
+    }
 }
