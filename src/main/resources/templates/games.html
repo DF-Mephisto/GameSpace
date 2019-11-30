@@ -15,17 +15,33 @@
     <li><a href="/add">ADD GAME</a></li>
 </ul>
 
-<h1>List of Available Games:</h1>
-<div th:each="game: ${gameslist}">
-    <div th:text="${game.name}"></div>
-    <div th:text="${game.genre}"></div>
-    <div th:text="${game.date}"></div>
-    <div th:text="${game.dev}"></div>
-    <div th:text="${game.desc}"></div>
-    <div th:text="${game.price}"></div>
-    <img th:src="${game.getImageStr()}" />
+<section class="cont-center">
+    <div class="w3-card-4" style="width:80%; background-color: rgba(100, 100, 100, 0.3);">
+        <header class="w3-container w3-black w3-opacity w3-text-white w3-center">
+            <h1>List of Available Games:</h1>
+        </header>
 
-</div>
+        <section class="card_layout">
+            <a class="card" th:each="game: ${gameslist}" th:href="'app/' + ${game.id} + '/' + ${game.name}">
+                <div class="content">
+                    <div style="height: 80%; text-align: center;">
+                        <img class="card_img" th:src="${game.getImageStr()}" />
+                    </div>
+
+                    <div class="card_text_container">
+                        <div class="card_text">
+                            <p th:text="${game.name}"></p>
+                        </div>
+                    </div>
+
+                </div>
+            </a>
+
+        </section>
+
+    </div>
+</section>
+
 
 </body>
 </html>

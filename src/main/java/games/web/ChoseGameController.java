@@ -31,7 +31,6 @@ public class ChoseGameController {
         List<Game> games = new ArrayList<>();
         GameRepo.findAll().forEach(n -> games.add(n));
         model.addAttribute("gameslist", games);
-        model.addAttribute("img2", new String(games.get(0).getImage()));
         return "games";
     }
 }
