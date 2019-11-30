@@ -57,6 +57,19 @@
     -moz-transform: translateX(-50%) translateY(-50%);
     -webkit-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
-    text-shadow: 0px 0px 4px deepskyblue;
     font-size: 1.5vw;
+}
+
+.card_price {
+    position: absolute;
+    background-color: #009911;
+    color: white;
+    right: 0px;
+    top: 0px;
+    font-size: 0.7vw;
+    padding: 2px;
+}
+
+.neo-text {
+    text-shadow: 0px 0px 4px deepskyblue;
 }

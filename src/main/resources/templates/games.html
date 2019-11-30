@@ -17,7 +17,7 @@
 
 <section class="cont-center">
     <div class="w3-card-4" style="width:80%; background-color: rgba(100, 100, 100, 0.3);">
-        <header class="w3-container w3-black w3-opacity w3-text-white w3-center">
+        <header class="w3-container w3-black w3-opacity w3-text-white w3-center neo-text">
             <h1>List of Available Games:</h1>
         </header>
 
@@ -29,9 +29,10 @@
                     </div>
 
                     <div class="card_text_container">
-                        <div class="card_text">
+                        <div class="card_text neo-text">
                             <p th:text="${game.name}"></p>
                         </div>
+                        <div class="card_price" th:text="${game.price} + '$'"></div>
                     </div>
 
                 </div>
