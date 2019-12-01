@@ -1,4 +1,4 @@
-package games;
+package games.entity;
 
 import lombok.AccessLevel;
 import lombok.Data;

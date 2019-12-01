@@ -22,6 +22,7 @@
 <div th:text="${game.desc}"></div>
 <div th:text="${game.price}"></div>
 <img th:src="${game.getImageStr()}" />
+<img th:each="screen: ${game.screens}" th:src="${screen.getImageStr()}">
 
 </body>
 </html>

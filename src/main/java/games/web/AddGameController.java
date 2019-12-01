@@ -1,20 +1,19 @@
 package games.web;
 
-import games.Game;
+import games.entity.Game;
 import games.data.GameRepository;
+import games.entity.Screen;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -43,7 +42,8 @@ public class AddGameController {
     }
 
     @PostMapping
-    public String processNewGame(@Valid Game game, BindingResult errors, @RequestParam("file") MultipartFile file)
+    public String processNewGame(@Valid Game game, BindingResult errors, @RequestParam("file") MultipartFile file,
+                                 @RequestParam("scrf") List<MultipartFile> screens)
     {
         try {
             if (file.isEmpty()) throw new NullPointerException("No image");
@@ -60,6 +60,19 @@ public class AddGameController {
             errors.rejectValue("image", "error.game", "You must choose an image");
         }
 
+        try
+        {
+            for (int i = 0; i < screens.size() - 1; i++)
+            {
+                Screen scr = new Screen();
+                scr.setImage(Base64.getEncoder().encode(screens.get(i).getBytes()));
+                scr.setGame(game);
+                game.getScreens().add(scr);
+            }
+
+        } catch (IOException e) {
+            errors.rejectValue("screens", "error.game", "Screenshots uploading error");
+        }
 
         if (errors.hasErrors())
         {
@@ -67,7 +80,6 @@ public class AddGameController {
         }
 
         GameRepo.save(game);
-        log.info("Processing new game: " + game);
 
         return "redirect:/orders/current";
     }

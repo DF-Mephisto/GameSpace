@@ -1,4 +1,4 @@
-package games;
+package games.entity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -7,6 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -40,6 +42,9 @@ public class Game {
     @NotBlank
     @Size(min=1, max=1000, message = "Description must be between 1 and 1000 length long")
     String desc;
+
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Screen> screens = new ArrayList<>();
 
     byte[] image;
     String ext;
