@@ -24,7 +24,7 @@
         <section class="card_layout">
             <a class="card" th:each="game: ${gameslist}" th:href="'app/' + ${game.id} + '/' + ${game.name}">
                 <div class="content">
-                    <div style="height: 80%; text-align: center;">
+                    <div class="card-center" style="height: 80%;">
                         <img class="card_img" th:src="${game.getImageStr()}" />
                     </div>
 

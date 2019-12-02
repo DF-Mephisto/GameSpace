@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/styles/header.css}">
     <link rel="stylesheet" th:href="@{/styles/game.css}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script th:src="@{/js/game.js}"></script>
 </head>
 <body th:style="${'background-image:url(' + '/images/pageBack.png' + '); background-attachment: fixed;'}">
 <ul class="liref">
@@ -15,14 +16,65 @@
     <li><a href="/add">ADD GAME</a></li>
 </ul>
 
-<div th:text="${game.name}"></div>
-<div th:text="${game.genre}"></div>
-<div th:text="${game.dev}"></div>
-<div th:text="${game.date}"></div>
-<div th:text="${game.desc}"></div>
-<div th:text="${game.price}"></div>
-<img th:src="${game.getImageStr()}" />
-<img th:each="screen: ${game.screens}" th:src="${screen.getImageStr()}">
+<section class="cont-center">
+    <div class="w3-card-4" style="width:80%; background-color: rgba(100, 100, 100, 0.3);">
+
+        <header class="w3-container w3-black w3-opacity w3-text-white w3-center neo-text">
+            <h1 th:text="${game.name}"></h1>
+        </header>
+
+        <div class="w3-dark-gray">
+            <div class="showcase">
+                <div class="content">
+                    <img class="mySlides showcase_img" th:src="${game.getImageStr()}" style="display:none"/>
+                    <img class="mySlides showcase_img" th:each="screen: ${game.screens}" th:src="${screen.getImageStr()}" style="display:none">
+                </div>
+            </div>
+
+            <div class="showcase-bar" style="display: flex; align-items: center;">
+                <button class="w3-button" style="float: left; width: 10%; height: 100%;" onclick="plusDivs(-1)">&#10094;</button>
+
+                <div style="width: 80%; float: left;">
+
+                    <div class="showcase-align">
+
+                            <img class="demo w3-opacity w3-hover-opacity-off showcase-bar-img showcase-bar-cont" th:src="${game.getImageStr()}" onclick="currentDiv(1)">
+                            <img class="demo w3-opacity w3-hover-opacity-off showcase-bar-img showcase-bar-cont" th:each="screen, iter: ${game.screens}" th:src="${screen.getImageStr()}" th:onclick="'javascript:currentDiv(' + ${iter.index + 2} + ')'">
+
+                    </div>
+
+                </div>
+
+                <button class="w3-button" style="width: 10%; height: 100%;" onclick="plusDivs(1)">&#10095;</button>
+            </div>
+        </div>
+
+        <table>
+            <tr>
+                <td>Genre</td>
+                <td th:text="${game.genre}"></td>
+            </tr>
+            <tr>
+                <td>Developer</td>
+                <td th:text="${game.dev}"></td>
+            </tr>
+            <tr>
+                <td>Release Date</td>
+                <td th:text="${game.date}"></td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td th:text="${game.desc}"></td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td th:text="${game.price}"></td>
+            </tr>
+        </table>
+
+    </div>
+</section>
+
 
 </body>
 </html>
