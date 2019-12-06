@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Game Space</title>
+    <link rel="stylesheet" th:href="@{/styles/header.css}">
+    <link rel="stylesheet" th:href="@{/styles/orderList.css}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body th:style="${'background-image:url(' + '/images/pageBack.png' + '); background-attachment: fixed;'}">
+<ul class="liref">
+    <li><a href="/">HOME</a></li>
+    <li><a href="/games">GAMES</a></li>
+    <li><a href="/add">ADD GAME</a></li>
+    <li><a style="background-color: #009911;" href="/orders/all">ORDERS</a></li>
+</ul>
+
+<section class="cont-center">
+    <div class="w3-card-4" style="width:80%; background-color: rgba(100, 100, 100, 0.3);">
+        <header class="w3-container w3-black w3-opacity w3-text-white w3-center neo-text">
+            <h1>Current Orders:</h1>
+        </header>
+
+        <div th:each="order: ${orders}">
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td th:text="${order.name}"></td>
+                </tr>
+                <tr>
+                    <td>City</td>
+                    <td th:text="${order.city}"></td>
+                </tr>
+                <tr>
+                    <td>Street</td>
+                    <td th:text="${order.street}"></td>
+                </tr>
+                <tr>
+                    <td>House</td>
+                    <td th:text="${order.house}"></td>
+                </tr>
+                <tr>
+                    <td>ccNumber</td>
+                    <td th:text="${order.ccNumber}"></td>
+                </tr>
+                <tr>
+                    <td>ccExpiration</td>
+                    <td th:text="${order.ccExpiration}"></td>
+                </tr>
+                <tr>
+                    <td>ccCVV</td>
+                    <td th:text="${order.ccCVV}"></td>
+                </tr>
+                <tr>
+                    <td>Ordered At</td>
+                    <td th:text="${order.placedAt}"></td>
+                </tr>
+                <tr th:each="game, iter: ${order.games}">
+                    <td th:text="'Game ' + ${iter.index + 1}"></td>
+                    <td th:text="${game.name}"></td>
+                </tr>
+            </table>
+
+            <hr>
+        </div>
+
+    </div>
+</section>
+
+
+</body>
+</html>

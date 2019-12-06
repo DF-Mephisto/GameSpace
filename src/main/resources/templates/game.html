@@ -14,6 +14,7 @@
     <li><a href="/">HOME</a></li>
     <li><a href="/games">GAMES</a></li>
     <li><a href="/add">ADD GAME</a></li>
+    <li><a href="/orders/all">ORDERS</a></li>
 </ul>
 
 <section class="cont-center">
@@ -23,7 +24,7 @@
             <h1 th:text="${game.name}"></h1>
         </header>
 
-        <div class="w3-dark-gray">
+        <div class="w3-dark-gray" style="padding-bottom: 15px;">
             <div class="showcase">
                 <div class="content">
                     <img class="mySlides showcase_img" th:src="${game.getImageStr()}" style="display:none"/>
@@ -31,7 +32,7 @@
                 </div>
             </div>
 
-            <div class="showcase-bar" style="display: flex; align-items: center;">
+            <div class="showcase-bar">
                 <button class="w3-button" style="float: left; width: 10%; height: 100%;" onclick="plusDivs(-1)">&#10094;</button>
 
                 <div style="width: 80%; float: left;">
@@ -68,9 +69,16 @@
             </tr>
             <tr>
                 <td>Price</td>
-                <td th:text="${game.price}"></td>
+                <td th:text="${game.price} + '$'"></td>
             </tr>
         </table>
+
+        <form method="post">
+            <input type="hidden" name="id" th:value="${game.id}"/>
+            <div class="w3-container w3-center" style="padding: 15px; background-color: rgba(55, 55, 55, 0.5);">
+                <button class="w3-btn w3-blue-grey">Add to Cart</button>
+            </div>
+        </form>
 
     </div>
 </section>

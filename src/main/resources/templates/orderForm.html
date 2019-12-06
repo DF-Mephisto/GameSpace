@@ -13,6 +13,7 @@
     <li><a href="/">HOME</a></li>
     <li><a href="/games">GAMES</a></li>
     <li><a href="/add">ADD GAME</a></li>
+    <li><a href="/orders/all">ORDERS</a></li>
 </ul>
 
 <div class="cont-center">
@@ -24,6 +25,8 @@
 
         <form method="post" th:action="@{/orders}" th:object="${order}">
 
+            <!--<div class="error" th:if="${#fields.hasErrors('games')}" th:errors="*{games}"></div>-->
+
             <div class="w3-container w3-opacity w3-text-white" style="background-color: rgba(50, 50, 50, 0.7)">
                 <h3><b>Deliver an order to:</b></h3>
             </div>
@@ -34,6 +37,7 @@
                     <input class="w3-input w3-border" type="text" th:field="*{name}">
                 </label>
                 <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
                 <br>
 
                 <label>

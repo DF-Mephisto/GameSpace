@@ -81,6 +81,6 @@ public class AddGameController {
 
         GameRepo.save(game);
 
-        return "redirect:/orders/current";
+        return "redirect:/games";
     }
 }

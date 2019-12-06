@@ -1,37 +1,67 @@
 package games.web;
 
+import games.data.OrderRepository;
 import games.entity.Order;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Controller
 @RequestMapping("/orders")
+@SessionAttributes("order")
 public class OrderController {
 
-    @GetMapping("/current")
-    public String orderForm(Model model)
+    private OrderRepository OrderRepo;
+
+    @Autowired
+    public OrderController(OrderRepository OrderRepo)
     {
-        model.addAttribute("order", new Order());
+        this.OrderRepo = OrderRepo;
+    }
+
+    @ModelAttribute(name = "order")
+    public Order order()
+    {
+        return new Order();
+    }
+
+    @GetMapping("/current")
+    public String orderForm()
+    {
         return "orderForm";
     }
 
-    @PostMapping
-    public String processOrder(@Valid Order order, Errors errors)
+    @GetMapping("/all")
+    public String orderList(Model model)
     {
+        List<Order> orders = new ArrayList<>();
+        OrderRepo.findAll().forEach(n -> orders.add(n));
+        model.addAttribute("orders", orders);
+
+        return "orderList";
+    }
+
+    @PostMapping
+    public String processOrder(@Valid Order order, BindingResult errors, SessionStatus sessionStatus)
+    {
+
         if (errors.hasErrors())
         {
             return "orderForm";
         }
 
-        log.info("Order submitted: " + order);
-        return "redirect:/";
+        OrderRepo.save(order);
+        sessionStatus.setComplete();
+
+        return "redirect:/games";
     }
 }
