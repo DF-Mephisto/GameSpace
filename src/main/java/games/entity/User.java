@@ -5,8 +5,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name="user", schema = "public")
@@ -19,6 +21,9 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
+    private List<Order> orders = new ArrayList<>();
 
     public User(){}
 
@@ -52,6 +57,11 @@ public class User implements UserDetails {
 
     public void setRole(String role)
     { this.role = role; }
+
+    public List<Order> getOrders()
+    {
+        return orders;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities()

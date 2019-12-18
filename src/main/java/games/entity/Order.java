@@ -56,6 +56,10 @@ public class Order{
     @NotEmpty(message = "You must choose at least one game")
     List<Game> games = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
+
     public void addGame(Game game)
     {
         games.add(game);

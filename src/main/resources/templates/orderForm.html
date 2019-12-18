@@ -24,7 +24,7 @@
             <h2><b>Order your game:</b></h2>
         </div>
 
-        <form method="post" th:action="@{/orders}" th:object="${order}">
+        <form method="post" th:object="${order}">
             <input type="hidden" name="_csrf" th:value="${_csrf.token}">
             <!--<div class="error" th:if="${#fields.hasErrors('games')}" th:errors="*{games}"></div>-->
 

@@ -6,12 +6,9 @@ import games.entity.Order;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @Slf4j
@@ -34,20 +31,9 @@ public class GameDataController {
         return new Order();
     }
 
-    @GetMapping("/*/*")
-    public String showGameData(Model model, HttpServletRequest request)
+    @GetMapping("/{id}/*")
+    public String showGameData(Model model, @PathVariable("id") Long id)
     {
-        Long id;
-
-        try{
-            String url = request.getRequestURL().toString().substring(0, request.getRequestURL().toString().lastIndexOf('/'));
-            id = Long.valueOf(url.substring(url.lastIndexOf('/') + 1));
-        }
-        catch(NumberFormatException e)
-        {
-            return "redirect:/games";
-        }
-
         Optional<Game> res;
         res = GameRepo.findById(id);
         if (res.isPresent())

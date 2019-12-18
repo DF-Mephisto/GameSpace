@@ -35,7 +35,7 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String processRegistration(@Valid @ModelAttribute(name = "regForm") RegistrationForm regForm, BindingResult errors)
+    public String processRegistration(@Valid @ModelAttribute("regForm") RegistrationForm regForm, BindingResult errors)
     {
         try {
             User user = UserRepo.findByUsername(regForm.getUsername());
