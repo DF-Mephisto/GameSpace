@@ -1,37 +1,57 @@
 package games.entity;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.Arrays;
 import java.util.Collection;
 
 @Entity
 @Table(name="user", schema = "public")
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    private Long id;
 
-    @NotBlank
-    @Size(min=1, max=50, message = "Name must be between 1 and 50 length long")
-    String username;
+    private String username;
+    private String password;
+    private String role;
 
-    @NotBlank
-    @Size(min=1, max=50, message = "Password must be between 1 and 50 length long")
-    String password;
+    public User(){}
 
-    String role;
+    public User(String username, String password, String role)
+    {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    public Long getId()
+    { return id; }
+
+    public void setId(Long id)
+    { this.id = id; }
+
+    public String getUsername()
+    { return username; }
+
+    public void setUsername(String username)
+    { this.username = username; }
+
+    public String getPassword()
+    { return password; }
+
+    public void setPassword(String password)
+    { this.password = password; }
+
+    public String getRole()
+    { return role; }
+
+    public void setRole(String role)
+    { this.role = role; }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities()

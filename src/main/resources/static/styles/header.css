@@ -7,6 +7,7 @@
     height: 50px;
     display: flex;
     justify-content: center;
+    position: relative;
 }
 
 .liref li {
@@ -23,4 +24,13 @@
 
 .liref li a:hover {
     background-color: #111111;
+}
+
+.selected {
+    background-color: #009911;
+}
+
+.log {
+    position: absolute;
+    right: 0px;
 }

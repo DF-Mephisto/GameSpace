@@ -21,7 +21,7 @@ public class DataLoader implements ApplicationRunner {
 
     public void run(ApplicationArguments args) {
 
-        User admin = userRepository.findByUsername("admin");
+        User admin = userRepository.findByRole("ROLE_ADMIN");
 
         if (admin == null)
         {

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Game Space</title>
+    <link rel="stylesheet" th:href="@{/styles/header.css}">
+    <link rel="stylesheet" th:href="@{/styles/login.css}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body th:style="${'background-image:url(' + '/images/pageBack.png' + '); background-attachment: fixed;'}">
+
+<ul class="liref">
+    <li><a href="/">HOME</a></li>
+    <li><a href="/games">GAMES</a></li>
+    <li><a href="/add">ADD GAME</a></li>
+    <li><a href="/orders/all">ORDERS</a></li>
+    <li class="log selected"><a href="/login">SIGN IN</a></li>
+</ul>
+
+<div class="cont-center">
+    <div class="w3-card-4" style="width:50%; background-color: rgba(100, 100, 100, 0.3);">
+
+        <div class="w3-container w3-black w3-opacity w3-text-white neo-text">
+            <h2><b>Sign in:</b></h2>
+        </div>
+
+        <div class="error" th:if="${param.error}">Invalid login or password</div>
+
+        <form class="w3-container" method="post">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+
+            <h3>Login: </h3>
+            <input class="w3-input w3-border" type="text" name="username">
+
+            <h3>Password: </h3>
+            <input class="w3-input w3-border" type="password" name="password">
+
+            <hr>
+
+            <div class="w3-container w3-center" style="margin-bottom: 16px;">
+                <button class="w3-btn w3-blue-grey">Sign in</button>
+                <a class="w3-btn w3-blue-grey" style="margin-left: 15px;" href="/register">Register</a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
