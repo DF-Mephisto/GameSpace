@@ -15,7 +15,14 @@
     <li><a href="/games">GAMES</a></li>
     <li><a href="/add">ADD GAME</a></li>
     <li><a href="/orders/all">ORDERS</a></li>
-    <li class="log selected"><a href="/login">SIGN IN</a></li>
+    <div class="log">
+        <li class="selected"><a href="/login">SIGN IN</a></li>
+
+        <li><form method="post" th:action="@{/logout}">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+            <button>LOGOUT</button>
+        </form></li>
+    </div>
 </ul>
 
 <div class="cont-center">

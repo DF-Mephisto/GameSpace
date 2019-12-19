@@ -14,7 +14,7 @@
     float: left;
 }
 
-.liref li  a {
+.liref li  a, li form {
     display: block;
     color: white;
     text-align: center;
@@ -22,8 +22,26 @@
     text-decoration: none;
 }
 
-.liref li a:hover {
+.liref li  button {
+    display: block;
+    color: white;
+    text-align: center;
+    background-color: #333333;
+    border: 0px;
+}
+
+.liref li  button:focus {
+    outline:0;
+}
+
+.liref li a:hover, li form:hover {
     background-color: #111111;
+    cursor: pointer;
+}
+
+.liref li form:hover button {
+    background-color: #111111;
+    cursor: pointer;
 }
 
 .selected {
