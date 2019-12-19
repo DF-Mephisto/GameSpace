@@ -100,4 +100,12 @@ public class OrderController {
 
         return "orderList";
     }
+
+    @PostMapping("/delete")
+    public String deleteOrder(@RequestParam("id") Long id)
+    {
+        OrderRepo.deleteById(id);
+
+        return "redirect:/orders/all";
+    }
 }

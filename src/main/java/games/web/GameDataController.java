@@ -57,4 +57,12 @@ public class GameDataController {
 
         return "redirect:/orders/current";
     }
+
+    @PostMapping("/delete")
+    public String deleteOrder(@RequestParam("id") Long id)
+    {
+       GameRepo.deleteById(id);
+
+        return "redirect:/games";
+    }
 }

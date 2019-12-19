@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,12 +14,13 @@
 <ul class="liref">
     <li><a href="/">HOME</a></li>
     <li><a href="/games">GAMES</a></li>
-    <li><a href="/add">ADD GAME</a></li>
-    <li><a href="/orders/all">ORDERS</a></li>
+    <li sec:authorize="hasRole('ADMIN')"><a href="/add">ADD GAME</a></li>
+    <li sec:authorize="isAuthenticated()"><a href="/orders/all">ORDERS</a></li>
     <div class="log">
-        <li><a href="/login">SIGN IN</a></li>
+        <li sec:authorize="!isAuthenticated()"><a href="/login">SIGN IN</a></li>
 
-        <li><form method="post" th:action="@{/logout}">
+        <li sec:authorize="isAuthenticated()"><div class="logName" sec:authentication="name"></div></li>
+        <li sec:authorize="isAuthenticated()"><form method="post" th:action="@{/logout}">
             <input type="hidden" name="_csrf" th:value="${_csrf.token}">
             <button>LOGOUT</button>
         </form></li>
@@ -60,34 +62,46 @@
 
         <table>
             <tr>
-                <td>Genre</td>
+                <th>Genre</th>
                 <td th:text="${game.genre}"></td>
             </tr>
             <tr>
-                <td>Developer</td>
+                <th>Developer</th>
                 <td th:text="${game.dev}"></td>
             </tr>
             <tr>
-                <td>Release Date</td>
+                <th>Release Date</th>
                 <td th:text="${game.date}"></td>
             </tr>
             <tr>
-                <td>Description</td>
-                <td th:text="${game.desc}"></td>
+                <th>Description</th>
+                <td class="desc" th:text="${game.desc}"></td>
             </tr>
             <tr>
-                <td>Price</td>
+                <th>Price</th>
                 <td th:text="${game.price} + '$'"></td>
             </tr>
         </table>
 
-        <form method="post">
-            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-            <input type="hidden" name="id" th:value="${game.id}"/>
-            <div class="w3-container w3-center" style="padding: 15px; background-color: rgba(55, 55, 55, 0.5);">
-                <button class="w3-btn w3-blue-grey">Add to Cart</button>
-            </div>
-        </form>
+        <div sec:authorize="!hasRole('ADMIN')">
+            <form method="post">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                <input type="hidden" name="id" th:value="${game.id}"/>
+                <div class="w3-container w3-center" style="padding: 15px; background-color: rgba(55, 55, 55, 0.5);">
+                    <button class="w3-btn w3-blue-grey">Add to Cart</button>
+                </div>
+            </form>
+        </div>
+
+        <div sec:authorize="hasRole('ADMIN')">
+            <form method="post" th:action="@{/app/delete}">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                <input type="hidden" name="id" th:value="${game.id}">
+                <div class="w3-container w3-center" style="padding: 15px; background-color: rgba(55, 55, 55, 0.5);">
+                    <button class="w3-btn w3-blue-grey">Delete</button>
+                </div>
+            </form>
+        </div>
 
     </div>
 </section>

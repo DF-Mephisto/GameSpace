@@ -36,11 +36,12 @@ public class Game {
     String dev;
 
     @Pattern(regexp = "([0-9]+)", message = "Price must be integer value")
+    @Size(min=1, max=6, message = "Price must be between 1 and 6 length long")
     String price;
 
     @Column(name="description")
     @NotBlank
-    @Size(min=1, max=1000, message = "Description must be between 1 and 1000 length long")
+    @Size(min=1, max=3000, message = "Description must be between 1 and 3000 length long")
     String desc;
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)

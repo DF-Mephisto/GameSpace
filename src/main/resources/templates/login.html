@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,12 +14,13 @@
 <ul class="liref">
     <li><a href="/">HOME</a></li>
     <li><a href="/games">GAMES</a></li>
-    <li><a href="/add">ADD GAME</a></li>
-    <li><a href="/orders/all">ORDERS</a></li>
+    <li sec:authorize="hasRole('ADMIN')"><a href="/add">ADD GAME</a></li>
+    <li sec:authorize="isAuthenticated()"><a href="/orders/all">ORDERS</a></li>
     <div class="log">
-        <li class="selected"><a href="/login">SIGN IN</a></li>
+        <li sec:authorize="!isAuthenticated()" class="selected"><a href="/login">SIGN IN</a></li>
 
-        <li><form method="post" th:action="@{/logout}">
+        <li sec:authorize="isAuthenticated()"><div class="logName" sec:authentication="name"></div></li>
+        <li sec:authorize="isAuthenticated()"><form method="post" th:action="@{/logout}">
             <input type="hidden" name="_csrf" th:value="${_csrf.token}">
             <button>LOGOUT</button>
         </form></li>
