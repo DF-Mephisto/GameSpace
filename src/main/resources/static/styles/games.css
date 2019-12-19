@@ -19,8 +19,8 @@
 
 .card{
     position: relative;
-    width: 20%;
-    padding-top: 30%;
+    width: calc(100% / 4);
+    padding-top: calc((56.25% / 4) * 1.25);
     margin: 20px;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
@@ -47,6 +47,10 @@
 .card_img {
     max-width:100%;
     max-height:100%;
+}
+
+.card_img_container {
+    height: 80%;
 }
 
 .card_text_container {

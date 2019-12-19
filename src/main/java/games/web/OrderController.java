@@ -77,7 +77,25 @@ public class OrderController {
     public String orderList(Model model)
     {
         List<Order> orders = new ArrayList<>();
-        OrderRepo.findAll().forEach(n -> orders.add(n));
+        User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails)
+        {
+            switch(principal.getRole())
+            {
+                case "ROLE_USER":
+                {
+                    OrderRepo.findAllByUser_id(principal.getId()).forEach(n -> orders.add(n));
+                    break;
+                }
+
+                case "ROLE_ADMIN":
+                {
+                    OrderRepo.findAll().forEach(n -> orders.add(n));
+                    break;
+                }
+            }
+        }
+
         model.addAttribute("orders", orders);
 
         return "orderList";
