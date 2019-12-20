@@ -16,7 +16,11 @@
     <li><a href="/games">GAMES</a></li>
     <li sec:authorize="hasRole('ADMIN')"><a href="/add">ADD GAME</a></li>
     <li sec:authorize="isAuthenticated()"><a href="/orders/all">ORDERS</a></li>
-    <div class="log">
+    <div class="log" style="height: 100%;">
+        <li sec:authorize="hasRole('USER')" style="height: 100%;">
+            <a href="/cart" style="height: 100%; padding: 5px;"><img class="cart" th:src="@{/images/cart.png}" alt="cart"></a>
+        </li>
+
         <li sec:authorize="!isAuthenticated()"><a href="/login">SIGN IN</a></li>
 
         <li sec:authorize="isAuthenticated()"><div class="logName" sec:authentication="name"></div></li>
@@ -84,7 +88,7 @@
         </table>
 
         <div sec:authorize="!hasRole('ADMIN')">
-            <form method="post">
+            <form method="post" th:action="@{/cart}">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}">
                 <input type="hidden" name="id" th:value="${game.id}"/>
                 <div class="w3-container w3-center" style="padding: 15px; background-color: rgba(55, 55, 55, 0.5);">

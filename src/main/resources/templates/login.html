@@ -16,7 +16,11 @@
     <li><a href="/games">GAMES</a></li>
     <li sec:authorize="hasRole('ADMIN')"><a href="/add">ADD GAME</a></li>
     <li sec:authorize="isAuthenticated()"><a href="/orders/all">ORDERS</a></li>
-    <div class="log">
+    <div class="log" style="height: 100%;">
+        <li sec:authorize="hasRole('USER')" style="height: 100%;">
+            <a href="/cart" style="height: 100%; padding: 5px;"><img class="cart" th:src="@{/images/cart.png}" alt="cart"></a>
+        </li>
+
         <li sec:authorize="!isAuthenticated()" class="selected"><a href="/login">SIGN IN</a></li>
 
         <li sec:authorize="isAuthenticated()"><div class="logName" sec:authentication="name"></div></li>

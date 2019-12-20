@@ -45,19 +45,6 @@ public class GameDataController {
         return "redirect:/games";
     }
 
-    @PostMapping("/*/*")
-    public String AddToCart(@RequestParam("id") Long id, @ModelAttribute Order order)
-    {
-        Optional<Game> res;
-        res = GameRepo.findById(id);
-        if (res.isPresent())
-        {
-            order.addGame(res.get());
-        }
-
-        return "redirect:/orders/current";
-    }
-
     @PostMapping("/delete")
     public String deleteOrder(@RequestParam("id") Long id)
     {

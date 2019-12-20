@@ -58,3 +58,8 @@
     position: absolute;
     right: 0px;
 }
+
+.cart {
+    max-height: 100%;
+    width: auto;
+}

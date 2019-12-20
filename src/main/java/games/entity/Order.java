@@ -52,6 +52,9 @@ public class Order{
     @Column(name="placedat")
     Date placedAt;
 
+    @Column(name="total_price")
+    int total_price;
+
     @ManyToMany(targetEntity = Game.class)
     @NotEmpty(message = "You must choose at least one game")
     List<Game> games = new ArrayList<>();
