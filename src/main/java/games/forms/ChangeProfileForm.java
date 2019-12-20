@@ -1,4 +1,4 @@
-package games.security;
+package games.forms;
 
 import games.entity.User;
 import lombok.AccessLevel;
@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RegistrationForm {
+public class ChangeProfileForm {
 
     @NotBlank
     @Size(min=1, max=50, message = "Name must be between 1 and 50 length long")
@@ -21,8 +21,5 @@ public class RegistrationForm {
     @Size(min=1, max=50, message = "Password must be between 1 and 50 length long")
     String password;
 
-    public User toUser(PasswordEncoder encoder)
-    {
-        return new User(username, encoder.encode(password), "ROLE_USER");
-    }
+    String oldPassword;
 }

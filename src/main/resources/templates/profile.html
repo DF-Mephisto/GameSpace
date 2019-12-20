@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Game Space</title>
     <link rel="stylesheet" th:href="@{/styles/header.css}">
-    <link rel="stylesheet" th:href="@{/styles/login.css}">
+    <link rel="stylesheet" th:href="@{/styles/registerForm.css}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body th:style="${'background-image:url(' + '/images/pageBack.png' + '); background-attachment: fixed;'}">
@@ -21,9 +21,9 @@
             <a href="/cart" style="height: 100%; padding: 5px;"><img class="cart" th:src="@{/images/cart.png}" alt="cart"></a>
         </li>
 
-        <li sec:authorize="!isAuthenticated()" class="selected"><a href="/login">SIGN IN</a></li>
+        <li sec:authorize="!isAuthenticated()"><a href="/login">SIGN IN</a></li>
 
-        <li sec:authorize="isAuthenticated()"><a class="logName" href="/profile" sec:authentication="name"></a></li>
+        <li sec:authorize="isAuthenticated()"><a class="logName selected" href="/profile" sec:authentication="name"></a></li>
         <li sec:authorize="isAuthenticated()"><form method="post" th:action="@{/logout}">
             <input type="hidden" name="_csrf" th:value="${_csrf.token}">
             <button>LOGOUT</button>
@@ -35,30 +35,35 @@
     <div class="w3-card-4" style="width:50%; background-color: rgba(100, 100, 100, 0.3);">
 
         <div class="w3-container w3-black w3-opacity w3-text-white neo-text">
-            <h2><b>Sign in:</b></h2>
+            <h2><b>Your profile:</b></h2>
         </div>
 
-        <div class="error" th:if="${param.error}">Invalid login or password</div>
-
-        <form class="w3-container" method="post">
+        <form class="w3-container" method="post" th:object="${form}">
             <input type="hidden" name="_csrf" th:value="${_csrf.token}">
 
             <h3>Login: </h3>
-            <input class="w3-input w3-border" type="text" name="username">
+            <input class="w3-input w3-border" type="text" th:field="*{username}">
+            <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
 
             <h3>Password: </h3>
-            <input class="w3-input w3-border" type="password" name="password">
+            <input class="w3-input w3-border" type="password" th:field="*{password}">
+            <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
 
             <hr>
 
+            <h3>Enter your current password: </h3>
+            <input class="w3-input w3-border" type="password" th:field="*{oldPassword}">
+            <span class="error" th:if="${#fields.hasErrors('oldPassword')}" th:errors="*{oldPassword}"></span>
+
+            <br>
             <div class="w3-container w3-center" style="margin-bottom: 16px;">
-                <button class="w3-btn w3-blue-grey">Sign in</button>
-                <a class="w3-btn w3-blue-grey" style="margin-left: 15px;" href="/register">Register</a>
+                <button class="w3-btn w3-blue-grey">Save</button>
             </div>
 
         </form>
     </div>
 </div>
+
 
 </body>
 </html>
