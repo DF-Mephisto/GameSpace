@@ -49,8 +49,10 @@ function addScrInput()
         var fileName = '';
         fileName = e.target.value.split( '\\' ).pop();
 
-        if( fileName ) {
+        if( fileName) {
             label.querySelector('span').innerHTML = fileName;
+
+            if (parseInt(input.getAttribute("id").substr(3), 10) == count - 1)
             addScrInput();
         }
     });
