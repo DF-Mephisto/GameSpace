@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/styles/header.css}">
     <link rel="stylesheet" th:href="@{/styles/games.css}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script th:src="@{/js/games.js}"></script>
 </head>
 <body th:style="${'background-image:url(' + '/images/pageBack.png' + '); background-attachment: fixed;'}">
 <ul class="liref">
@@ -55,6 +56,13 @@
             </a>
 
         </section>
+
+        <footer id="pages" class="w3-bar w3-center w3-margin-bottom"></footer>
+        <script th:inline="javascript">
+            var cur = /*[[${currentPage}]]*/ 0;
+            var count = /*[[${pageCount}]]*/ 0;
+            drawPages(cur, count);
+        </script>
 
     </div>
 </section>
