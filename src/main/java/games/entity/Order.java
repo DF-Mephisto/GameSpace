@@ -55,7 +55,10 @@ public class Order{
     @Column(name="total_price")
     int total_price;
 
-    @ManyToMany(targetEntity = Game.class)
+    @ManyToMany
+    @JoinTable(name = "game_order_games",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "games_id"))
     @NotEmpty(message = "You must choose at least one game")
     List<Game> games = new ArrayList<>();
 
