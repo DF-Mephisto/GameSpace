@@ -1,9 +1,12 @@
 package games.web;
 
+import games.data.GameRepository;
 import games.data.OrderRepository;
 import games.data.UserRepository;
+import games.entity.Game;
 import games.entity.Order;
 import games.entity.User;
+import games.services.OrderFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,9 +17,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -26,19 +35,22 @@ public class OrderController {
 
     private OrderRepository OrderRepo;
     private UserRepository UserRepo;
+    private OrderFactory OrderFact;
 
     @Autowired
-    public OrderController(OrderRepository OrderRepo, UserRepository UserRepo)
+    public OrderController(OrderRepository OrderRepo, UserRepository UserRepo,
+                           OrderFactory OrderFact)
 
     {
         this.OrderRepo = OrderRepo;
         this.UserRepo = UserRepo;
+        this.OrderFact = OrderFact;
     }
 
     @ModelAttribute(name = "order")
-    public Order order()
+    public Order order(@CookieValue(value = "items", defaultValue = "") String items)
     {
-        return new Order();
+        return OrderFact.makeOrder(items);
     }
 
     @GetMapping("/current")
@@ -48,7 +60,8 @@ public class OrderController {
     }
 
     @PostMapping("/current")
-    public String processOrder(@Valid @ModelAttribute("order") Order order, BindingResult errors, SessionStatus sessionStatus)
+    public String processOrder(@Valid @ModelAttribute("order") Order order, BindingResult errors,
+                               SessionStatus sessionStatus, HttpServletResponse response)
     {
 
         if (errors.hasErrors())
@@ -67,6 +80,13 @@ public class OrderController {
                 OrderRepo.save(order);
             }
         }
+
+
+        Cookie cookie = new Cookie("items", null);
+        cookie.setMaxAge(0);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        response.addCookie(cookie);
 
         sessionStatus.setComplete();
 

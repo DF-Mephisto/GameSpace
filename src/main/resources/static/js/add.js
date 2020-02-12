@@ -52,7 +52,7 @@ function addScrInput()
         if( fileName) {
             label.querySelector('span').innerHTML = fileName;
 
-            if (parseInt(input.getAttribute("id").substr(3), 10) == count - 1)
+            if (parseInt(e.target.getAttribute("id").substr(3), 10) == count - 1)
             addScrInput();
         }
     });
