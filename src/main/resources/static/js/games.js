@@ -1,6 +1,6 @@
-function drawPages(cur, count) {
+function drawPages(cur, count, name) {
 
-    if (count == 1)
+    if (count == 1 || count == 0)
     {
         document.getElementById("pages").style.display = "none";
         return;
@@ -25,7 +25,11 @@ function drawPages(cur, count) {
         page.className = "w3-button";
         if (cur == i) page.className += " w3-green";
         page.innerHTML = i + 1;
-        page.setAttribute("href", "/games?page=" + i)
+
+        var link = "/games?page=" + i;
+        if (name != "") link += "&name=" + name;
+
+        page.setAttribute("href", link);
         document.getElementById('pages').appendChild(page);
     }
 

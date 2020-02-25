@@ -39,18 +39,21 @@ public class ChoseGameController {
     }
 
     @GetMapping
-    public String showGameList(@RequestParam(value = "page", defaultValue = "0") int page, Model model)
+    public String showGameList(@RequestParam(value = "page", defaultValue = "0") int page,
+                               @RequestParam(value = "name", defaultValue = "") String name,
+                               Model model)
     {
         Pageable pageable = PageRequest.of(page, pageSize);
 
         List<Game> games = new ArrayList<>();
-        GameRepo.findAll(pageable).forEach(n -> games.add(n));
+        GameRepo.findByNameIgnoreCaseContaining(name, pageable).forEach(n -> games.add(n));
 
-        long pageCount = (long)Math.ceil((double)GameRepo.count() / (double)pageSize);
+        long pageCount = (long)Math.ceil((double)GameRepo.countByNameIgnoreCaseContaining(name) / (double)pageSize);
 
         model.addAttribute("gameslist", games);
         model.addAttribute("currentPage", page);
         model.addAttribute("pageCount", pageCount);
+        model.addAttribute("name", name);
         return "games";
     }
 }

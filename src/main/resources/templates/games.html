@@ -37,6 +37,19 @@
             <h1>List of Available Games:</h1>
         </header>
 
+        <section class="w3-container w3-black w3-opacity w3-center">
+            <form class="w3-container w3-center" method="get">
+
+                <div class="search-table">
+                    <input class="search" type="text" name="name" th:value="${name}" placeholder="search">
+                    <button style="height: 100%">
+                        <img class="lens" th:src="@{/images/lens.png}" alt="search">
+                    </button>
+                </div>
+
+            </form>
+        </section>
+
         <section class="card_layout">
             <a class="card" th:each="game: ${gameslist}" th:href="'app/' + ${game.id} + '/' + ${game.name}">
                 <div class="content">
@@ -61,7 +74,8 @@
         <script th:inline="javascript">
             var cur = /*[[${currentPage}]]*/ 0;
             var count = /*[[${pageCount}]]*/ 0;
-            drawPages(cur, count);
+            var name = /*[[${name}]]*/ "";
+            drawPages(cur, count, name);
         </script>
 
     </div>
