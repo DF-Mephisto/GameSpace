@@ -7,6 +7,8 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class DataLoader implements ApplicationRunner {
 
@@ -21,14 +23,13 @@ public class DataLoader implements ApplicationRunner {
 
     public void run(ApplicationArguments args) {
 
-        User admin = userRepository.findByRole("ROLE_ADMIN");
-
-        if (admin == null)
+        if (userRepository.findByRole("ROLE_ADMIN").size() == 0)
         {
-            admin = new User();
+            User admin = new User();
             admin.setUsername("admin");
             admin.setPassword(passwordEncoder.encode("admin"));
             admin.setRole("ROLE_ADMIN");
+            admin.setNonLocked(true);
 
             userRepository.save(admin);
         }

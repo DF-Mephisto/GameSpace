@@ -6,22 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Game Space</title>
     <link rel="stylesheet" th:href="@{/styles/header.css}">
-    <link rel="stylesheet" th:href="@{/styles/home.css}">
+    <link rel="stylesheet" th:href="@{/styles/users.css}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body th:style="${'background-image:url(' + '/images/pageBack.png' + '); background-attachment: fixed;'}">
-
 <ul class="liref">
-    <li><a class="selected" href="/">HOME</a></li>
+    <li><a href="/">HOME</a></li>
     <li><a href="/games">GAMES</a></li>
     <li sec:authorize="hasRole('ADMIN')"><a href="/add">ADD GAME</a></li>
-    <li sec:authorize="hasRole('ADMIN')"><a href="/users">USERS</a></li>
+    <li sec:authorize="hasRole('ADMIN')"><a class="selected" href="/users">USERS</a></li>
     <li sec:authorize="isAuthenticated()"><a href="/orders/all">ORDERS</a></li>
-    <div class="log" style="height: 100%;">
-        <li sec:authorize="hasRole('USER')" style="height: 100%;">
-            <a href="/cart" style="height: 100%; padding: 5px;"><img class="cart" th:src="@{/images/cart.png}" alt="cart"></a>
-        </li>
-
+    <div class="log">
         <li sec:authorize="!isAuthenticated()"><a href="/login">SIGN IN</a></li>
 
         <li sec:authorize="isAuthenticated()"><a class="logName" href="/profile" sec:authentication="name"></a></li>
@@ -32,20 +27,31 @@
     </div>
 </ul>
 
+<section class="cont-center">
+    <div class="w3-card-4" style="width:80%; background-color: rgba(100, 100, 100, 0.3);">
+        <header class="w3-container w3-black w3-opacity w3-text-white w3-center neo-text">
+            <h1>Users:</h1>
+        </header>
 
-<div class="cont-center">
-    <div class="w3-card-4 w3-center" style="width:50%; background-color: rgba(100, 100, 100, 0.3);">
-        <div class="w3-container w3-center " style="background-color: rgba(100, 100, 100, 0.5);">
-            <h2 class="w3-opacity w3-text-black neo-text">
-                <b>Welcome to the video games GameSpace shop!</b>
-            </h2>
-        </div>
+        <table>
+            <tr th:each="user: ${users}">
+                <th th:text="${user.username}"></th>
 
-        <img th:src="@{/images/GameSpace.png}" class="w3-image" alt="logo"/>
+                <td>
+                    <form method="post" th:action="@{/users/{id}/lock(id=${user.id})}">
+                        <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+
+                        <div class="w3-container w3-center">
+                            <button class="w3-btn w3-blue-grey" th:if="${user.nonLocked}">Lock</button>
+                            <button class="w3-btn w3-blue-grey" th:unless="${user.nonLocked}">Unlock</button>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        </table>
+
     </div>
-</div>
-
-
+</section>
 
 </body>
 </html>

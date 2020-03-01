@@ -1,9 +1,7 @@
 package games.web;
 
-import games.data.GameRepository;
 import games.data.OrderRepository;
 import games.data.UserRepository;
-import games.entity.Game;
 import games.entity.Order;
 import games.entity.User;
 import games.services.OrderFactory;
@@ -18,14 +16,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Slf4j
 @Controller

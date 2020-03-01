@@ -22,6 +22,9 @@ public class User implements UserDetails {
     private String password;
     private String role;
 
+    @Column(name="nonlocked")
+    private boolean nonLocked;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();
 
@@ -32,6 +35,7 @@ public class User implements UserDetails {
         this.username = username;
         this.password = password;
         this.role = role;
+        nonLocked = true;
     }
 
     public Long getId()
@@ -58,6 +62,14 @@ public class User implements UserDetails {
     public void setRole(String role)
     { this.role = role; }
 
+    public boolean getNonLocked() {
+        return nonLocked;
+    }
+
+    public void setNonLocked(boolean nonLocked) {
+        this.nonLocked = nonLocked;
+    }
+
     public List<Order> getOrders()
     {
         return orders;
@@ -76,7 +88,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return nonLocked;
     }
 
     @Override
@@ -88,6 +100,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 
 }

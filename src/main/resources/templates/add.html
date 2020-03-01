@@ -15,6 +15,7 @@
     <li><a href="/">HOME</a></li>
     <li><a href="/games">GAMES</a></li>
     <li sec:authorize="hasRole('ADMIN')"><a class="selected" href="/add">ADD GAME</a></li>
+    <li sec:authorize="hasRole('ADMIN')"><a href="/users">USERS</a></li>
     <li sec:authorize="isAuthenticated()"><a href="/orders/all">ORDERS</a></li>
     <div class="log">
         <li sec:authorize="!isAuthenticated()"><a href="/login">SIGN IN</a></li>
