@@ -94,4 +94,15 @@ public class GameDataController {
 
         return "redirect:/games";
     }
+
+    @PostMapping("/{gameId}/{gameName}/comment/{commentId}/delete")
+    public String deleteComment(@PathVariable("gameId") Long gameId, @PathVariable("gameName") String gameName,
+                                @PathVariable("commentId") Long commentId)
+    {
+        String retURI = "app/" + gameId + "/" + gameName;
+
+        CommRepo.deleteById(commentId);
+
+        return "redirect:/" + retURI;
+    }
 }
