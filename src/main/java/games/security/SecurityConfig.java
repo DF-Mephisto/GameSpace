@@ -31,10 +31,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure (HttpSecurity http) throws Exception
     {
-        http.authorizeRequests().antMatchers("/add", "/users", "/users/*").hasRole("ADMIN")
-                .antMatchers("/orders/*").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/cart").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/profile").hasAnyRole("USER", "ADMIN")
+        http.authorizeRequests().antMatchers("/add", "/users", "/users/*, /app/delete")
+                .hasRole("ADMIN")
+                .antMatchers("/orders/*", "/cart", "/profile", "/app/comment")
+                .hasAnyRole("USER", "ADMIN")
                 .antMatchers("/", "/*").permitAll()
                 .and().formLogin().loginPage("/login")
                 .and().logout().logoutSuccessUrl("/")

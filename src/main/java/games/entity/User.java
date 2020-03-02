@@ -28,6 +28,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
     public User(){}
 
     public User(String username, String password, String role)
@@ -73,6 +76,11 @@ public class User implements UserDetails {
     public List<Order> getOrders()
     {
         return orders;
+    }
+
+    public List<Comment> getComments()
+    {
+        return comments;
     }
 
     @Override

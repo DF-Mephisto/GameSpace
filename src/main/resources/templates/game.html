@@ -110,6 +110,24 @@
             </form>
         </div>
 
+
+        <form method="post" th:action="@{/app/comment}" th:object="${comment}">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+            <input type="hidden" name="id" th:value="${game.id}">
+
+            <textarea class="w3-input w3-border" placeholder="Input your comments" th:field="*{text}" rows="5" cols="50" maxlength="1000" style="resize: none;"></textarea>
+
+            <div class="w3-container w3-center" style="padding: 15px; background-color: rgba(55, 55, 55, 0.5);">
+                <button class="w3-btn w3-blue-grey">Post</button>
+            </div>
+        </form>
+
+        <div class="comments" th:each="comment: ${game.comments}">
+            <hr>
+            <div class="avatar" th:text="${comment.user.username}"></div>
+            <div class="comment" th:text="${comment.text}"></div>
+        </div>
+
     </div>
 </section>
 

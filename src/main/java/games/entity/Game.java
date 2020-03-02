@@ -47,6 +47,9 @@ public class Game {
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Screen> screens = new ArrayList<>();
 
+    @OneToMany(mappedBy = "game", cascade = CascadeType.MERGE, orphanRemoval = true)
+    List<Comment> comments = new ArrayList<>();
+
     byte[] image;
     String ext;
     public String getImageStr()

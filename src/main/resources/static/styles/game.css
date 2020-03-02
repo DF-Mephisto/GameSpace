@@ -87,3 +87,33 @@ tr {
     justify-content: center;
 }
 
+.comments {
+    padding: 0px 15px 15px 15px;
+    background-color: rgba(55, 55, 55, 0.7);
+    overflow: auto;
+}
+
+.comments hr {
+    margin-top: 0px;
+}
+
+.avatar {
+    width: 20%;
+    text-align: center;
+    padding: 8px;
+    font-size: 14pt;
+    text-shadow: 0px 0px 4px deepskyblue;
+    color: white;
+    float: left;
+}
+
+.comment {
+    width: 80%;
+    padding: 8px;
+    font-size: 12pt;
+    text-shadow: 0px 0px 2px deepskyblue;
+    color: white;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    float: left;
+}

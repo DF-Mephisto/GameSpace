@@ -1,15 +1,22 @@
 package games.web;
 
+import games.data.CommentRepository;
+import games.data.UserRepository;
+import games.entity.Comment;
 import games.entity.Game;
 import games.data.GameRepository;
 import games.entity.Order;
+import games.entity.User;
 import games.services.OrderFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Slf4j
@@ -19,12 +26,17 @@ import java.util.Optional;
 public class GameDataController {
 
     private GameRepository GameRepo;
+    private CommentRepository CommRepo;
+    private UserRepository UserRepo;
     private OrderFactory OrderFact;
 
     @Autowired
-    public GameDataController(GameRepository GameRepo, OrderFactory OrderFact)
+    public GameDataController(GameRepository GameRepo, OrderFactory OrderFact,
+                              CommentRepository CommRepo, UserRepository UserRepo)
     {
         this.GameRepo = GameRepo;
+        this.CommRepo = CommRepo;
+        this.UserRepo = UserRepo;
         this.OrderFact = OrderFact;
     }
 
@@ -42,6 +54,7 @@ public class GameDataController {
         if (res.isPresent())
         {
             model.addAttribute("game", res.get());
+            model.addAttribute("comment", new Comment());
             return "game";
         }
 
@@ -54,5 +67,31 @@ public class GameDataController {
        GameRepo.deleteById(id);
 
        return "redirect:/games";
+    }
+
+    @PostMapping("/comment")
+    public String addComment(@Valid @ModelAttribute("comment") Comment comment, BindingResult errors,
+                             @RequestParam("id") Long id,
+                             @AuthenticationPrincipal User userid)
+    {
+        Optional<Game> res;
+        res = GameRepo.findById(id);
+        if (res.isPresent())
+        {
+            Game game = res.get();
+            String gameURI = "app/" + game.getId() + "/" + game.getName();
+
+            if (!errors.hasErrors())
+            {
+                User user = UserRepo.findById(userid.getId()).get();
+                comment.setUser(user);
+                comment.setGame(game);
+
+                CommRepo.save(comment);
+            }
+            return "redirect:/" + gameURI;
+        }
+
+        return "redirect:/games";
     }
 }
