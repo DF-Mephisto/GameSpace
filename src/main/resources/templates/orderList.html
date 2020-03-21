@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/styles/header.css}">
     <link rel="stylesheet" th:href="@{/styles/orderList.css}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script th:src="@{/js/orderList.js}"></script>
 </head>
 <body th:style="${'background-image:url(' + '/images/pageBack.png' + '); background-attachment: fixed;'}">
 <ul class="liref">
@@ -37,8 +38,26 @@
             <h1>Current Orders:</h1>
         </header>
 
+        <section sec:authorize="hasRole('ADMIN')" class="w3-container w3-black w3-opacity w3-center">
+            <form class="w3-container w3-center" method="get">
+
+                <div class="search-table">
+                    <input th:if="${orderid == -1}" class="search" type="number" name="orderid" min="0" placeholder="search">
+                    <input th:unless="${orderid == -1}" class="search" type="number" name="orderid" min="0" th:value="${orderid}" placeholder="search">
+                    <button style="height: 100%">
+                        <img class="lens" th:src="@{/images/lens.png}" alt="search">
+                    </button>
+                </div>
+
+            </form>
+        </section>
+
         <div th:each="order: ${orders}">
             <table>
+                <tr>
+                    <td>Order ID</td>
+                    <td th:text="${order.id}"></td>
+                </tr>
                 <tr>
                     <td>Name</td>
                     <td th:text="${order.name}"></td>
@@ -94,6 +113,13 @@
 
             <hr>
         </div>
+
+        <footer id="pages" class="w3-bar w3-center w3-margin-bottom"></footer>
+        <script th:inline="javascript">
+            var cur = /*[[${currentPage}]]*/ 0;
+            var count = /*[[${pageCount}]]*/ 0;
+            drawPages(cur, count);
+        </script>
 
     </div>
 </section>

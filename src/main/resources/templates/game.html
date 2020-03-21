@@ -127,7 +127,7 @@
             <div class="avatar" th:text="${comment.user.username}"></div>
             <div class="comment" th:text="${comment.text}"></div>
 
-            <div th:if="${#authorization.expression('hasRole(''ADMIN'')')} or ${comment.user.id} == ${#authentication.getPrincipal().getId()}">
+            <div th:if="${#authorization.expression('hasRole(''ADMIN'')')} or (${#authorization.expression('isAuthenticated()')} and ${comment.user.id} == ${#authentication.getPrincipal().getId()})">
                 <br>
                 <form method="post" th:action="@{/app/{game_id}/{game_name}/comment/{comment_id}/delete(comment_id=${comment.id}, game_id=${game.id}, game_name=${game.name})}">
                     <input type="hidden" name="_csrf" th:value="${_csrf.token}">

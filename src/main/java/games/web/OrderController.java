@@ -7,6 +7,9 @@ import games.entity.User;
 import games.services.OrderFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -20,17 +23,25 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Slf4j
 @Controller
 @RequestMapping("/orders")
 @SessionAttributes("order")
+@ConfigurationProperties(prefix = "order.orders")
 public class OrderController {
 
     private OrderRepository OrderRepo;
     private UserRepository UserRepo;
     private OrderFactory OrderFact;
+
+    private int pageSize = 1;
+    public void setPageSize(int pageSize)
+    {
+        this.pageSize = pageSize;
+    }
 
     @Autowired
     public OrderController(OrderRepository OrderRepo, UserRepository UserRepo,
@@ -89,8 +100,13 @@ public class OrderController {
     }
 
     @GetMapping("/all")
-    public String orderList(Model model)
+    public String orderList(@RequestParam(value = "page", defaultValue = "0") int page,
+                            @RequestParam(value = "orderid", defaultValue = "-1") Long orderid,
+                            Model model)
     {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        long pageCount = 1;
+
         List<Order> orders = new ArrayList<>();
         User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails)
@@ -99,19 +115,32 @@ public class OrderController {
             {
                 case "ROLE_USER":
                 {
-                    OrderRepo.findAllByUser_id(principal.getId()).forEach(n -> orders.add(n));
+                    long userId = principal.getId();
+                    OrderRepo.findAllByUser_id(userId, pageable).forEach(n -> orders.add(n));
+                    pageCount = (long)Math.ceil((double)OrderRepo.countByUser_id(userId) / (double)pageSize);
                     break;
                 }
 
                 case "ROLE_ADMIN":
                 {
-                    OrderRepo.findAll().forEach(n -> orders.add(n));
+                    if (orderid == -1) OrderRepo.findAll(pageable).forEach(n -> orders.add(n));
+                    else
+                    {
+                        Optional<Order> order = OrderRepo.findById(orderid);
+                        if (order.isPresent()) orders.add(order.get());
+                        break;
+                    }
+
+                    pageCount = (long)Math.ceil((double)OrderRepo.count() / (double)pageSize);
                     break;
                 }
             }
         }
 
         model.addAttribute("orders", orders);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageCount", pageCount);
+        model.addAttribute("orderid", orderid);
 
         return "orderList";
     }
