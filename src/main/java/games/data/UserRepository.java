@@ -1,6 +1,7 @@
 package games.data;
 
 import games.entity.User;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -14,5 +15,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
     List<User> findByRole(String role);
 
     @Query("select u from User u where u.role <> :role")
-    List<User> findAllExceptRole(@Param("role") String role, Sort sort);
+    List<User> findAllExceptRole(@Param("role") String role, Pageable pageable);
+
+    @Query("select count(u) from User u where u.role <> :role")
+    Long countAllExceptRole(@Param("role") String role);
 }

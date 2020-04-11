@@ -8,7 +8,7 @@
     <link rel="stylesheet" th:href="@{/styles/header.css}">
     <link rel="stylesheet" th:href="@{/styles/orderList.css}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script th:src="@{/js/orderList.js}"></script>
+    <script th:src="@{/js/pageable.js}"></script>
 </head>
 <body th:style="${'background-image:url(' + '/images/pageBack.png' + '); background-attachment: fixed;'}">
 <ul class="liref">
@@ -118,7 +118,7 @@
         <script th:inline="javascript">
             var cur = /*[[${currentPage}]]*/ 0;
             var count = /*[[${pageCount}]]*/ 0;
-            drawPages(cur, count);
+            drawPages(cur, count, "/orders/all/");
         </script>
 
     </div>

@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/styles/header.css}">
     <link rel="stylesheet" th:href="@{/styles/users.css}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script th:src="@{/js/pageable.js}"></script>
 </head>
 <body th:style="${'background-image:url(' + '/images/pageBack.png' + '); background-attachment: fixed;'}">
 <ul class="liref">
@@ -40,6 +41,7 @@
                 <td>
                     <form method="post" th:action="@{/users/{id}/lock(id=${user.id})}">
                         <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                        <input type="hidden" name="page" th:value="${currentPage}">
 
                         <div class="w3-container w3-center">
                             <button class="w3-btn w3-blue-grey" th:if="${user.nonLocked}">Lock</button>
@@ -49,6 +51,15 @@
                 </td>
             </tr>
         </table>
+
+        <br/>
+
+        <footer id="pages" class="w3-bar w3-center w3-margin-bottom"></footer>
+        <script th:inline="javascript">
+            var cur = /*[[${currentPage}]]*/ 0;
+            var count = /*[[${pageCount}]]*/ 0;
+            drawPages(cur, count, "/users/");
+        </script>
 
     </div>
 </section>

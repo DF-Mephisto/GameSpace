@@ -1,4 +1,4 @@
-function drawPages(cur, count) {
+function drawPages(cur, count, url) {
 
     if (count == 1 || count == 0)
     {
@@ -9,7 +9,7 @@ function drawPages(cur, count) {
     var minPage = document.createElement('a');
     minPage.className = "w3-button";
     minPage.innerHTML = "«";
-    minPage.setAttribute("href", "/orders/all?page=0")
+    minPage.setAttribute("href", url + "?page=0")
     document.getElementById('pages').appendChild(minPage);
 
     var start = 0;
@@ -25,7 +25,7 @@ function drawPages(cur, count) {
         if (cur == i) page.className += " w3-green";
         page.innerHTML = i + 1;
 
-        var link = "/orders/all?page=" + i;
+        var link = url + "?page=" + i;
 
         page.setAttribute("href", link);
         document.getElementById('pages').appendChild(page);
@@ -34,7 +34,7 @@ function drawPages(cur, count) {
     var maxPage = document.createElement('a');
     maxPage.className = "w3-button";
     maxPage.innerHTML = "»";
-    maxPage.setAttribute("href", "/orders/all?page=" + (count - 1));
+    maxPage.setAttribute("href", url + "?page=" + (count - 1));
     document.getElementById('pages').appendChild(maxPage);
 
 }
