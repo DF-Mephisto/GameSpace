@@ -102,7 +102,7 @@ public class GameDataController {
         String retURI = "app/" + gameId + "/" + gameName;
 
         CommRepo.deleteById(commentId);
-
+        //test
         return "redirect:/" + retURI;
     }
 }
