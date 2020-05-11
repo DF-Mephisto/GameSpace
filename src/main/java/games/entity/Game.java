@@ -47,7 +47,8 @@ public class Game {
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Screen> screens = new ArrayList<>();
 
-    @OneToMany(mappedBy = "game", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("placedat DESC")
     List<Comment> comments = new ArrayList<>();
 
     byte[] image;
