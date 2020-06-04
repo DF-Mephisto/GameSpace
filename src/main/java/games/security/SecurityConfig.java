@@ -31,11 +31,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure (HttpSecurity http) throws Exception
     {
-        http.authorizeRequests().antMatchers("/add", "/users", "/users/*")
+        http.authorizeRequests().antMatchers("/add", "/users")
                 .hasRole("ADMIN")
-                .antMatchers("/orders/*", "/cart", "/profile", "/app/comment")
+                .antMatchers("/orders/**", "/cart", "/profile", "/app/comment")
                 .hasAnyRole("USER", "ADMIN")
-                .antMatchers("/", "/*").permitAll()
+                .antMatchers("/", "/**").permitAll()
                 .and().formLogin().loginPage("/login")
                 .and().logout().logoutSuccessUrl("/")
                 .and().requiresChannel().anyRequest().requiresSecure();

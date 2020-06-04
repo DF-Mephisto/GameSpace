@@ -41,6 +41,11 @@ public class OrderFactory {
             }
         }
 
+        //creditcard template
+        order.setCcNumber("4556326939605282");
+        order.setCcExpiration("11/11");
+        order.setCcCVV("123");
+
         return order;
     }
 }
