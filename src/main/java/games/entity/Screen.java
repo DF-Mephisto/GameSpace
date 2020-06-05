@@ -24,6 +24,7 @@ public class Screen {
     byte[] image;
     public String getImageStr()
     {
-        return "data:image;base64," + new String(getImage());
+        if (image == null) return "";
+        else return "data:image;base64," + new String(image);
     }
 }
