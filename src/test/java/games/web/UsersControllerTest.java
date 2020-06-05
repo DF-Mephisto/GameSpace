@@ -71,7 +71,7 @@ public class UsersControllerTest {
         HttpSessionCsrfTokenRepository httpSessionCsrfTokenRepository = new HttpSessionCsrfTokenRepository();
         CsrfToken csrfToken = httpSessionCsrfTokenRepository.generateToken(new MockHttpServletRequest());
 
-        mockMvc.perform(post("/users/0/lock/").param("page", "0").secure(true)
+        mockMvc.perform(post("/users/{id}/lock/", 0).param("page", "0").secure(true)
                 .sessionAttr(TOKEN_ATTR_NAME, csrfToken)
                 .param(csrfToken.getParameterName(), csrfToken.getToken()))
                 .andExpect(redirectedUrl("/users?page=0"));

@@ -62,7 +62,7 @@ public class GameDataController {
     }
 
     @PostMapping("/delete")
-    public String deleteOrder(@RequestParam("id") Long id)
+    public String deleteGame(@RequestParam("id") Long id)
     {
        GameRepo.deleteById(id);
 

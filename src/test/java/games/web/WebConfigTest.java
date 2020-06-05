@@ -28,10 +28,10 @@ public class WebConfigTest {
     private MockMvc mockMvc;
 
     @MockBean
-    UserRepository userRepo;
+    private UserRepository userRepo;
 
     @MockBean
-    UserRepositoryUserDetailsService userRepoService;
+    private UserRepositoryUserDetailsService userRepoService;
 
     @Test
     public void testHomePageRedir() throws Exception{

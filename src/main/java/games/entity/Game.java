@@ -55,6 +55,7 @@ public class Game {
     String ext;
     public String getImageStr()
     {
-        return "data:image/" + getExt() + ";base64," + new String(getImage());
+        if (image == null) return "";
+        else return "data:image/" + ext + ";base64," + new String(image);
     }
 }
