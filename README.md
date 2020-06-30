@@ -3,4 +3,4 @@
 </p>
 
 ### Screenshots:
-<img src="https://user-images.githubusercontent.com/53357476/75251851-7c728600-57ec-11ea-8e05-0da1a2f03410.png" width="430"> <img src="https://user-images.githubusercontent.com/53357476/71617642-075c4900-2bcd-11ea-942c-767a4d18bfdf.png" width="430"> <img src="https://user-images.githubusercontent.com/53357476/71617645-088d7600-2bcd-11ea-9e8d-eeb0b4f4a50a.png" width="430"> <img src="https://user-images.githubusercontent.com/53357476/71617647-09bea300-2bcd-11ea-8acf-719750d1e36d.png" width="430">
+<img src="https://user-images.githubusercontent.com/53357476/75251851-7c728600-57ec-11ea-8e05-0da1a2f03410.png" width="49%"> <img src="https://user-images.githubusercontent.com/53357476/71617642-075c4900-2bcd-11ea-942c-767a4d18bfdf.png" width="49%"> <img src="https://user-images.githubusercontent.com/53357476/71617645-088d7600-2bcd-11ea-9e8d-eeb0b4f4a50a.png" width="49%"> <img src="https://user-images.githubusercontent.com/53357476/71617647-09bea300-2bcd-11ea-8acf-719750d1e36d.png" width="49%">
